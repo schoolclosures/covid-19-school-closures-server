@@ -33,5 +33,7 @@ module Covid19SchoolClosures
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    config.VOLUNTEERS_AIRTABLE = "https://api.airtable.com/v0/appnZuBjB6ijeb3M2/all-volunteers"
   end
 end
