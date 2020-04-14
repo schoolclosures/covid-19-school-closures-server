@@ -14,7 +14,7 @@ class VolunteersController < ApplicationController
   private
 
   def fetchVolunteerJson():
-    uri = URI(ENV[VOLUNTEERS_AIRTABLE_URL])
+    uri = URI(ENV["VOLUNTEERS_AIRTABLE_URL"])
     uri.query = "view=Grid%20view"
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
