@@ -1,7 +1,7 @@
 require 'net/http'
 
 class VolunteersController < ApplicationController
-  def get
+  def index
     volunteers_json = fetchVolunteerJson;
 
     respond_to do |format|
@@ -13,7 +13,7 @@ class VolunteersController < ApplicationController
 
   private
 
-  def fetchVolunteerJson():
+  def fetchVolunteerJson
     uri = URI(ENV["VOLUNTEERS_AIRTABLE_URL"])
     uri.query = "view=Grid%20view"
     http = Net::HTTP.new(uri.host, uri.port)
