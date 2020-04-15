@@ -3,8 +3,11 @@
 # your test database is "scratch space" for the test suite and is wiped
 # and recreated between test runs. Don't rely on the data there!
 
+
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
+  Dir[Rails.root.join('app/lib/**/*.rb')].each { | file | require file}
 
   config.cache_classes = false
 
@@ -18,6 +21,7 @@ Rails.application.configure do
   config.public_file_server.headers = {
     'Cache-Control' => "public, max-age=#{1.hour.to_i}"
   }
+
 
   # Show full error reports and disable caching.
   config.consider_all_requests_local       = true

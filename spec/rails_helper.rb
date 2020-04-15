@@ -16,6 +16,8 @@ Shoulda::Matchers.configure do |config|
     end
 end
 
+Dir[Rails.root.join('spec/support/**/*.rb')].each { |file| require file }
+
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
@@ -47,6 +49,8 @@ RSpec.configure do |config|
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = true
+
+  config.include RequestSpecHelper
 
   # add `FactoryBot` methods
   config.include FactoryBot::Syntax::Methods

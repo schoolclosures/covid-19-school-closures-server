@@ -2,13 +2,8 @@ require 'net/http'
 
 class VolunteersController < ApplicationController
   def index
-    volunteers_json = fetchVolunteerJson;
-
-    respond_to do |format|
-        format.json do
-            render(json: volunteers_json)
-        end
-    end
+    volunteers = fetchVolunteerJson;
+    json_response(volunteers)
   end
 
   private
