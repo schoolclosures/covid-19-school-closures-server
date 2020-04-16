@@ -7,5 +7,9 @@ class Message
     def invalid_credentials
       "Invalid Credentials"
     end
+
+    def missing_token
+      "Missing Token"
+    end
   end
 end
