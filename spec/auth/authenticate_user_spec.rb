@@ -5,7 +5,7 @@ RSpec.describe AuthenticateUser do
   subject(:valid_auth_obj) { described_class.new( user.email, user.password ) }
   subject(:invalid_auth_obj) { described_class.new( user.email, "MasterYoda" ) }
 
-  describe '/auth/login' do
+  describe '#call' do
     context 'with valid credentials' do
       let(:response) { valid_auth_obj.call }
 
