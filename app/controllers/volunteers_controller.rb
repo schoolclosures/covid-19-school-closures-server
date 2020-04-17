@@ -9,13 +9,6 @@ class VolunteersController < ApplicationController
   private
 
   def fetchVolunteerJson
-    uri = URI(ENV["VOLUNTEERS_AIRTABLE_URL"])
-    uri.query = "view=Grid%20view"
-    http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = true
-
-    request = Net::HTTP::Get.new(uri.path, {"Authorization" => "Bearer #{ENV["AIRTABLE_API_KEY"]}"})
-    response = http.request(request)
-    return JSON.parse(response.body)
+    records = AIRTABLE_VOLUNTEERS_TABLE.all(:sort => ['Description', :asc])
   end
 end
