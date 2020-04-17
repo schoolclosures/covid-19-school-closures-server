@@ -7,6 +7,6 @@ class VolunteersController < ApplicationController
   private
 
   def fetchVolunteerJson
-    records = AIRTABLE_VOLUNTEERS_TABLE.all(:sort => ['Description', :asc])
+    records = AIRTABLE_VOLUNTEERS_TABLE.all(:sort => ['Description', :asc], :limit => 40)
   end
 end
