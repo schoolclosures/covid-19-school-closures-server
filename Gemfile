@@ -35,6 +35,9 @@ gem 'faker'
 # Use JWT for auth
 gem 'jwt'
 
+# Use Airtable gem to pull data from volunteers table etc...
+gem 'airtable'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
