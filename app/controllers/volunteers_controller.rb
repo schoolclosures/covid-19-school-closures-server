@@ -1,4 +1,4 @@
-class VolunteerController < ApplicationController
+class VolunteersController < ApplicationController
   def index
     volunteers = fetchVolunteerJson;
     render json: volunteers, status: :ok, serializer: VolunteerSerializer
