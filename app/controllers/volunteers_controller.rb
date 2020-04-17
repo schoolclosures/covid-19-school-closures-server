@@ -1,8 +1,7 @@
 class VolunteersController < ApplicationController
   def index
     volunteers = fetchVolunteerJson;
-    render json: volunteers, status: :ok, serializer: VolunteerSerializer
-    # json_response(volunteers)
+    json_response(volunteers)
   end
 
   private
