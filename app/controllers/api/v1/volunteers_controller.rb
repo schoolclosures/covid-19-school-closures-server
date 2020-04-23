@@ -1,26 +1,42 @@
 require 'net/http'
 module Api
   module V1
-    class VolunteersController < ApplicationController
-      
+    class VolunteersController < ApplicationController      
       def index
         volunteers = Volunteer.all
-        render json: { status: 'Success', message: 'Loaded volunteers', data: volunteers }, status: :ok  
+        render json: { status: 'SUCCESS', message: 'Loaded volunteers', data: volunteers }, status: :ok
       end
 
       def show
         volunteer = Volunteer.find(params[:id])
-        render json: { status: 'Success', message: 'Loaded volunteer', data: volunteer }, status: :ok
+        render json: { status: 'SUCCESS', message: 'Loaded volunteer', data: volunteer }, status: :ok
       end
 
       def create
         volunteer = Volunteer.new(volunteer_params)
 
         if volunteer.save
-          render json: { status: 'SUCCESS', message: 'Loaded volunteer', data: volunteer }, status: :ok
+          render json: { status: 'SUCCESS', message: 'Created volunteer', data: volunteer }, status: :ok
         else
-          render json: { status: 'ERROR', message: 'Article not saved', data: volunteer.errors }, status: :unprocessable_entity
+          render json: { status: 'ERROR', message: 'Volunteer not saved', data: volunteer.errors }, status: :unprocessable_entity
         end
+      end
+
+      def update
+        volunteer = Volunteer.find(params[:id])
+
+        if volunteer.update(volunteer_params)
+          render json: { status: 'SUCCESS', message: 'Updated volunteer', data: volunteer }, status: :ok
+        else
+          render json: { status: 'ERROR', message: 'Volunteer not updated', data: volunteer.errors }, status: :unprocessable_entity
+        end
+      end
+
+      def destroy
+        volunteer = Volunteer.find(params[:id])
+        volunteer.destroy
+
+        render json: { status: 'SUCCESS', message: 'Deleted volunteer', data: volunteer }, status: :ok
       end
 
       def get
