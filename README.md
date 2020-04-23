@@ -37,4 +37,4 @@ Before you start working on your issue create a branch and name it like the foll
 #### Create a pull request
 * Go to your fork on Github after you have pushed up your branch. A new button should be visible near the top of the page. It will allow you to create a pull request to the original School Closures Server Repo.
 
-*Please a detailed description for your pull request .
+*Please a detailed description for your pull request*
