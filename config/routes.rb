@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
     namespace 'api' do
         namespace 'v1' do
-            resources :volunteers
+            resources :volunteers, except: :index
         end
     end
     # get 'volunteers', to: 'volunteers#get'

@@ -1,12 +1,7 @@
 require 'net/http'
 module Api
   module V1
-    class VolunteersController < ApplicationController      
-      def index
-        volunteers = Volunteer.all
-        render json: { status: 'SUCCESS', message: 'Loaded volunteers', data: volunteers }, status: :ok
-      end
-
+    class VolunteersController < ApplicationController
       def show
         volunteer = Volunteer.find(params[:id])
         render json: { status: 'SUCCESS', message: 'Loaded volunteer', data: volunteer }, status: :ok
