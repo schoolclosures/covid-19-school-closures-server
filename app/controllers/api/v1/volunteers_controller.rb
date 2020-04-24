@@ -2,56 +2,45 @@ require 'net/http'
 module Api
   module V1
     class VolunteersController < ApplicationController
-      include Response
-      include ExceptionHandler
+      before_action :find_volunteer, only: %i[show update destroy]
 
       def show
-        json_response(find_volunteer)
+        json_response(@volunteer)
       end
 
       def create
-        json_response(Volunteer.create!(volunteer_params))
+        volunteer = Volunteer.create!(volunteer_params)
+        json_response(volunteer)
       end
 
       def update
-        json_response(find_volunteer.update!(volunteer_params))
-      end
-
-      def destroy
-        find_volunteer.destroy!
+        @volunteer.update!(volunteer_params)
         head :no_content
       end
 
-      def get
-        volunteers_json = fetchVolunteerJson;
-
-        respond_to do |format|
-          format.json do
-            render(json: volunteers_json)
-          end
-        end
+      def destroy
+        @volunteer.destroy
+        head :no_content
       end
+
+      # def index
+      #   volunteers = fetchVolunteerJson
+      #   json_response(volunteers)
+      # end
 
       private
 
       def find_volunteer
-        Volunteer.find(params[:id])
+        @volunteer = Volunteer.find(params[:id])
       end
 
       def volunteer_params
         params.require(:volunteer).permit(:image_url, :name, :job_desc)
       end
 
-      def fetchVolunteerJson()
-        uri = URI(ENV[VOLUNTEERS_AIRTABLE_URL])
-        uri.query = "view=Grid%20view"
-        http = Net::HTTP.new(uri.host, uri.port)
-        http.use_ssl = true
-
-        request = Net::HTTP::Get.new(uri.path, {"Authorization" => "Bearer #{ENV["AIRTABLE_API_KEY"]}"})
-        response = http.request(request)
-        return JSON.parse(response.body)
-      end
+      # def fetchVolunteerJson
+      #   records = AIRTABLE_VOLUNTEERS_TABLE.all(:sort => ['Description', :asc], :limit => 40)
+      # end
     end
   end
 end
