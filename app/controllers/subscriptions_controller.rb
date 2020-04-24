@@ -26,6 +26,11 @@ class SubscriptionsController < ApplicationController
         end
     end
 
+    def send
+      ReportWorker.perform_async()
+      render json: {message: "Thanks for subscribing."}
+    end
+
 private
 
    def subscription_params
