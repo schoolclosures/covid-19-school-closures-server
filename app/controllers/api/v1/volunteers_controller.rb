@@ -2,49 +2,41 @@ require 'net/http'
 module Api
   module V1
     class VolunteersController < ApplicationController
+      include Response
+      include ExceptionHandler
+
       def show
-        volunteer = Volunteer.find(params[:id])
-        render json: { status: 'SUCCESS', message: 'Loaded volunteer', data: volunteer }, status: :ok
+        json_response(find_volunteer)
       end
 
       def create
-        volunteer = Volunteer.new(volunteer_params)
-
-        if volunteer.save
-          render json: { status: 'SUCCESS', message: 'Created volunteer', data: volunteer }, status: :ok
-        else
-          render json: { status: 'ERROR', message: 'Volunteer not saved', data: volunteer.errors }, status: :unprocessable_entity
-        end
+        json_response(Volunteer.create!(volunteer_params))
       end
 
       def update
-        volunteer = Volunteer.find(params[:id])
-
-        if volunteer.update(volunteer_params)
-          render json: { status: 'SUCCESS', message: 'Updated volunteer', data: volunteer }, status: :ok
-        else
-          render json: { status: 'ERROR', message: 'Volunteer not updated', data: volunteer.errors }, status: :unprocessable_entity
-        end
+        json_response(find_volunteer.update!(volunteer_params))
       end
 
       def destroy
-        volunteer = Volunteer.find(params[:id])
-        volunteer.destroy
-
-        render json: { status: 'SUCCESS', message: 'Deleted volunteer', data: volunteer }, status: :ok
+        find_volunteer.destroy!
+        head :no_content
       end
 
       def get
         volunteers_json = fetchVolunteerJson;
 
         respond_to do |format|
-            format.json do
-                render(json: volunteers_json)
-            end
+          format.json do
+            render(json: volunteers_json)
+          end
         end
       end
 
       private
+
+      def find_volunteer
+        Volunteer.find(params[:id])
+      end
 
       def volunteer_params
         params.require(:volunteer).permit(:image_url, :name, :job_desc)
