@@ -14,7 +14,11 @@ module ExceptionHandler
   end
 
   def four_twenty_two(e)
+<<<<<<< HEAD
     json_response({message: e.message}, :unprocessable_entity)
+=======
+    json_response({message: e.nessage}, :unprocessable_entity)
+>>>>>>> 803fac90a6390a67300376960ab621f0bc7feb87
   end
 
   def four_zero_one(e)
