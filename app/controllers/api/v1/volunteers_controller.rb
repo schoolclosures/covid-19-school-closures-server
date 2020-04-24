@@ -23,24 +23,24 @@ module Api
         head :no_content
       end
 
-      # def index
-      #   volunteers = fetchVolunteerJson
-      #   json_response(volunteers)
-      # end
+      def index
+        volunteers = fetchVolunteerJson
+        json_response(volunteers)
+      end
 
       private
 
       def find_volunteer
-        @volunteer = Volunteer.find(params[:id])
+        @volunteer = Volunteer.find_by!(id: params[:id])
       end
 
       def volunteer_params
         params.require(:volunteer).permit(:image_url, :name, :job_desc)
       end
 
-      # def fetchVolunteerJson
-      #   records = AIRTABLE_VOLUNTEERS_TABLE.all(:sort => ['Description', :asc], :limit => 40)
-      # end
+      def fetchVolunteerJson
+        records = AIRTABLE_VOLUNTEERS_TABLE.all(:sort => ['Description', :asc], :limit => 40)
+      end
     end
   end
 end
