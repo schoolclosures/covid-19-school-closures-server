@@ -6,12 +6,8 @@ class SubscriptionsController < ApplicationController
     end
 
     def create
-        subscription = Subscription.create(subscription_params)
-        if subscription.save
-            render json: subscription
-        else
-            render json: {error: "Sorry, please try again."}
-        end
+        subscription = Subscription.create!(subscription_params)
+        json_response(subscription)
     end
 
     def destroy
