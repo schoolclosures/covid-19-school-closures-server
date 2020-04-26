@@ -6,7 +6,6 @@ ruby '>= 2.5.1'
 gem 'sqlite3'
 
 gem 'sidekiq'
-gem 'sinatra',github: 'sinatra/sinatra'
 
 gem 'pry'
 
