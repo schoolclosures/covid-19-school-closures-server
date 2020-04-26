@@ -1,3 +1,3 @@
 class VolunteerSerializer < ActiveModel::Serializer
-  attributes :first_name, :last_name, :description, :photo
+  attributes :id, :name, :image_url, :job_desc
 end

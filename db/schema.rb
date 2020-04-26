@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 2020_04_22_191803) do
+=======
+ActiveRecord::Schema.define(version: 2020_04_22_152933) do
+>>>>>>> 0e1c291132d27c8700c57c967df2b1164c99ad01
 
   create_table "subscriptions", force: :cascade do |t|
     t.string "email"
@@ -27,6 +31,12 @@ ActiveRecord::Schema.define(version: 2020_04_22_191803) do
     t.string "is_volunteer", default: "f"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "volunteers", force: :cascade do |t|
+    t.string "image_url"
+    t.string "name"
+    t.text "job_desc"
   end
 
 end

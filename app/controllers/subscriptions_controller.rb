@@ -1,4 +1,5 @@
 class SubscriptionsController < ApplicationController
+    before_action :find_subscription, only:[:destroy]
 
     def index
         render json: { message: 'Hashes of data will get converted to JSON' }
@@ -31,11 +32,17 @@ class SubscriptionsController < ApplicationController
       render json: {message: "Thanks for subscribing."}
     end
 
-private
+   private
+
+   def find_subscription
+     @subscription = Subscription.find_by!(email: params[:email])
+   end
 
    def subscription_params
       params.require(:subscription).permit(:email)
    end
+
+   
 
 
 
