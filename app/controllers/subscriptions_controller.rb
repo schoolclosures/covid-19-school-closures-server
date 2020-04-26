@@ -2,7 +2,9 @@ class SubscriptionsController < ApplicationController
     before_action :find_subscription, only:[:destroy]
 
     def index
-        
+        #not sure if you want me to do it through airtable too or not but if so can you give me the airtable password or do you want me to apply for mine?
+        subscriptions = Subscription.all 
+        json_response(subscription) 
     end
 
     def create
@@ -29,9 +31,5 @@ class SubscriptionsController < ApplicationController
    def subscription_params
       params.require(:subscription).permit(:email)
    end
-
-   
-
-
 
 end
