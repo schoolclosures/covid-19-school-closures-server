@@ -2,7 +2,7 @@ class SubscriptionsController < ApplicationController
     before_action :find_subscription, only:[:destroy]
 
     def index
-        render json: { message: 'Hashes of data will get converted to JSON' }
+        
     end
 
     def create
