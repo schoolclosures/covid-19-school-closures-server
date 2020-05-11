@@ -2,6 +2,8 @@ Rails.application.routes.draw do
     namespace 'api' do
         namespace 'v1' do
             resources :volunteers, except: :index
+
+            post 'newsletter/subscribe', to: 'newsletter#subscribe'
         end
     end
     get 'volunteers', to: 'volunteers#index'
