@@ -54,6 +54,7 @@ group :test do
   gem 'shoulda-matchers'
   gem 'factory_bot_rails'
   gem 'database_cleaner'
+  gem 'rails-controller-testing'
 end
 
 group :development do
