@@ -69,7 +69,12 @@ RSpec.describe Api::V1::VolunteersController, type: :request do
 
 
        it "creates one more volunteer" do
-        expect(Volunteer.count).to eq(1)
+        # I wanted to use the commented out way at first however, for some reason, 
+        # rspec detects that count never changed, I guess it is bc the observation on :count
+        # starts after before(:each) block happen?
+
+        #  =>  expect{create_volunteer}.to change(Volunteer, :count).by(1)
+          expect(Volunteer.count).to eq(1)
        end
 
     end
