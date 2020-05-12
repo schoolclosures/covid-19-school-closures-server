@@ -43,6 +43,9 @@ RSpec.describe Api::V1::VolunteersController, type: :request do
 
         let(:params){
             {:volunteer =>  {
+               # I change the key format from :key to "key" bc I want to use include to test them,
+               # and "name" is not equal to :name here and I don't know how to make them consistent 
+               # without changing the following key to "" format. pls let me know any good ways to keep them consistent 
                 "image_url"=>"new.jpg", 
                 "name"=>"new", 
                 "job_desc"=>"newdescription"
@@ -66,7 +69,7 @@ RSpec.describe Api::V1::VolunteersController, type: :request do
 
 
        it "creates one more volunteer" do
-          expect(Volunteer.count).to eq(1)
+        expect(Volunteer.count).to eq(1)
        end
 
     end
