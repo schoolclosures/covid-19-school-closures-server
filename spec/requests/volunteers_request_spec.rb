@@ -4,8 +4,8 @@ require 'rails_helper'
 # ask what if request failed??
 
 RSpec.describe Api::V1::VolunteersController, type: :request do
-    let(:volunteer1) { Volunteer.create!( :image_url=>"first.jpg", :name=>"test1", :job_desc=>"description") }
-    let(:volunteer2) { Volunteer.create!( :image_url=>"second.jpg", :name=>"test2", :job_desc=>"description") }
+
+    let(:volunteer) { Volunteer.create!( :image_url=>"first.jpg", :name=>"test1", :job_desc=>"description") }       
 
     # describe '#index' do
       
@@ -27,7 +27,6 @@ RSpec.describe Api::V1::VolunteersController, type: :request do
     # end
 
     describe '#show' do
-
         before(:each){ get "http://localhost:3000/api/v1/volunteers/#{volunteer1.id}"}
         let(:response_json){json_parse(response.body)}
 
@@ -84,7 +83,7 @@ RSpec.describe Api::V1::VolunteersController, type: :request do
 
 
     describe '#update' do
-        let(:params){
+       let(:params){
             {:volunteer =>  {
                 "image_url"=>"new.jpg", 
                 "name"=>"test1", 
@@ -94,24 +93,17 @@ RSpec.describe Api::V1::VolunteersController, type: :request do
         }
 
         it 'updates a certain volunteer' do
-            patch "http://localhost:3000/api/v1/volunteers/#{volunteer1.id}", :params => params
-            # expect(volunteer1.image_url).to eq("new.jpg")
-            puts volunteer1.image_url
+            patch "/api/v1/volunteers/#{volunteer.id}", :params => params
+            volunteer.reload
+            expect(volunteer.image_url).to eq("new.jpg")
         end
 
 
 
         it 'returns a no_content header' do
-            patch "http://localhost:3000/api/v1/volunteers/#{volunteer1.id}", :params => params
+            patch "/api/v1/volunteers/#{volunteer.id}", :params => params
             expect(response).to have_http_status "204"
         end
-
-
-       
-    end
-
-    describe '#destroy' do
-
 
     end
 
