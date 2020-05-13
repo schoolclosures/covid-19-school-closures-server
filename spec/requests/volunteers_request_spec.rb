@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'pry'
 
 # ADD sharing examples about connect succesfully
 # ask what if request failed??
@@ -27,7 +28,7 @@ RSpec.describe Api::V1::VolunteersController, type: :request do
     # end
 
     describe '#show' do
-        before(:each){ get "http://localhost:3000/api/v1/volunteers/#{volunteer1.id}"}
+        before(:each){ get "/api/v1/volunteers/#{volunteer.id}"}
         let(:response_json){json_parse(response.body)}
 
         it "responds succesfully" do
@@ -36,7 +37,7 @@ RSpec.describe Api::V1::VolunteersController, type: :request do
 
         it "returns the information for the right volunteer" do
          #parse response to format json
-          expect(response_json['id']).to eq(volunteer1.id)
+          expect(response_json['id']).to eq(volunteer.id)
         end
 
     end
@@ -106,6 +107,24 @@ RSpec.describe Api::V1::VolunteersController, type: :request do
         end
 
     end
+
+    describe '#destroy' do
+
+        it 'delete a volunteer' do
+            get "/api/v1/volunteers/#{volunteer.id}"
+            expect(Volunteer.count).to be(1)
+            
+            delete "/api/v1/volunteers/#{volunteer.id}"
+            expect(Volunteer.count).to be(0)
+        end
+
+        it 'returns a no_content header' do
+            delete "/api/v1/volunteers/#{volunteer.id}"
+            expect(response).to have_http_status "204"
+       end
+
+
+end
 
 end
 
