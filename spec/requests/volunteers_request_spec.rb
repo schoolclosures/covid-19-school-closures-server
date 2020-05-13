@@ -1,27 +1,30 @@
 require 'rails_helper'
 
+# ADD sharing examples about connect succesfully
+# ask what if request failed??
+
 RSpec.describe Api::V1::VolunteersController, type: :request do
     let(:volunteer1) { Volunteer.create!( :image_url=>"first.jpg", :name=>"test1", :job_desc=>"description") }
     let(:volunteer2) { Volunteer.create!( :image_url=>"second.jpg", :name=>"test2", :job_desc=>"description") }
 
-    describe '#index' do
+    # describe '#index' do
       
-    #    before(:example){get('http://localhost:3000/api/v1/volunteers')}
+    # #    before(:example){get('http://localhost:3000/api/v1/volunteers')}
 
-    #    it 'responds succesfully' do
-    #      pending("volunteer route error")        
-    #       expect(response).to have_http_status(:ok)
+    # #    it 'responds succesfully' do
+    # #      pending("volunteer route error")        
+    # #       expect(response).to have_http_status(:ok)
+    # #    end
+
+    #    it 'renders all volunteers' do
+
     #    end
 
-       it 'renders all volunteers' do
+    #    it 'renders volunteers in ascending order'
 
-       end
+    #    it 'renders at most 40 volunteers'
 
-       it 'renders volunteers in ascending order'
-
-       it 'renders at most 40 volunteers'
-
-    end
+    # end
 
     describe '#show' do
 
@@ -48,7 +51,7 @@ RSpec.describe Api::V1::VolunteersController, type: :request do
                # without changing the following key to "" format. pls let me know any good ways to keep them consistent 
                 "image_url"=>"new.jpg", 
                 "name"=>"new", 
-                "job_desc"=>"newdescription"
+                "job_desc"=>"new description"
               }
             }
         }
@@ -81,9 +84,34 @@ RSpec.describe Api::V1::VolunteersController, type: :request do
 
 
     describe '#update' do
+        let(:params){
+            {:volunteer =>  {
+                "image_url"=>"new.jpg", 
+                "name"=>"test1", 
+                "job_desc"=>"description"
+            }
+            }
+        }
+
+        it 'updates a certain volunteer' do
+            patch "http://localhost:3000/api/v1/volunteers/#{volunteer1.id}", :params => params
+            # expect(volunteer1.image_url).to eq("new.jpg")
+            puts volunteer1.image_url
+        end
+
+
+
+        it 'returns a no_content header' do
+            patch "http://localhost:3000/api/v1/volunteers/#{volunteer1.id}", :params => params
+            expect(response).to have_http_status "204"
+        end
+
+
+       
     end
 
     describe '#destroy' do
+
 
     end
 
