@@ -8,24 +8,24 @@ RSpec.describe Api::V1::VolunteersController, type: :request do
 
     let(:volunteer) { Volunteer.create!( :image_url=>"first.jpg", :name=>"test1", :job_desc=>"description") }       
 
-    # describe '#index' do
+    describe '#index' do
       
-    # #    before(:example){get('http://localhost:3000/api/v1/volunteers')}
+       before(:example){get('http://localhost:3000/api/v1/volunteers')}
 
-    # #    it 'responds succesfully' do
-    # #      pending("volunteer route error")        
-    # #       expect(response).to have_http_status(:ok)
-    # #    end
+       it 'responds succesfully' do
+         pending("volunteer route error")        
+          expect(response).to have_http_status(:ok)
+       end
 
-    #    it 'renders all volunteers' do
+       it 'renders all volunteers' do
 
-    #    end
+       end
 
-    #    it 'renders volunteers in ascending order'
+       it 'renders volunteers in ascending order'
 
-    #    it 'renders at most 40 volunteers'
+       it 'renders at most 40 volunteers'
 
-    # end
+    end
 
     describe '#show' do
         before(:each){ get "/api/v1/volunteers/#{volunteer.id}"}
@@ -113,7 +113,7 @@ RSpec.describe Api::V1::VolunteersController, type: :request do
         it 'delete a volunteer' do
             get "/api/v1/volunteers/#{volunteer.id}"
             expect(Volunteer.count).to be(1)
-            
+
             delete "/api/v1/volunteers/#{volunteer.id}"
             expect(Volunteer.count).to be(0)
         end
