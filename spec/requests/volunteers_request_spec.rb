@@ -29,7 +29,7 @@ RSpec.describe Api::V1::VolunteersController, type: :request do
 
     describe '#show' do
         before(:each){ get "/api/v1/volunteers/#{volunteer.id}"}
-        let(:response_json){json_parse(response.body)}
+        let(:response_json){json}
 
         it "responds succesfully" do
           expect(response).to have_http_status(200)
@@ -59,7 +59,7 @@ RSpec.describe Api::V1::VolunteersController, type: :request do
         let(:create_volunteer){post "/api/v1/volunteers", :params => params}
 
         before(:each){ create_volunteer }    
-        let(:response_json){json_parse(response.body)}
+        let(:response_json){json}
  
        it "responds successfully" do
           expect(response).to have_http_status(200)
@@ -125,11 +125,3 @@ RSpec.describe Api::V1::VolunteersController, type: :request do
 
 end
 
-private
-
-   def json_parse(string)
-     if string.class==String
-       json = JSON.parse(string)
-     end
-       json
-    end
