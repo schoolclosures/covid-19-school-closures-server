@@ -6,24 +6,38 @@ require 'pry'
 
 RSpec.describe Api::V1::VolunteersController, type: :request do
 
-    let(:volunteer) { Volunteer.create!( :image_url=>"first.jpg", :name=>"test1", :job_desc=>"description") }       
+# make sure to delete AIRTABLE API KEY before pushing it up
+    let(:volunteer) { Volunteer.create!( :image_url=>"volunteer.jpg", :name=>"test1", :job_desc=>"description") }       
 
     describe '#index' do
-      
-       before(:example){get('http://localhost:3000/api/v1/volunteers')}
+       let!(:volunteer1) { Volunteer.create!( :image_url=>"first.jpg", :name=>"test1", :job_desc=>"description") }       
+       let!(:volunteer2) { Volunteer.create!( :image_url=>"second.jpg", :name=>"test2", :job_desc=>"description") }       
 
        it 'responds succesfully' do
-         pending("volunteer route error")        
+        # I don't want to repeat this allow_any_instance thing, but I got error when taking it out of the example:
+        # => error: The use of doubles or partial doubles from rspec-mocks outside of the per-test lifecycle is not supported.
+        allow_any_instance_of(Api::V1::VolunteersController).to receive(:fetchVolunteerJson) do
+            [volunteer1,volunteer2]
+           end 
+          get('/api/v1/volunteers')
+          
           expect(response).to have_http_status(:ok)
        end
 
        it 'renders all volunteers' do
-
+          allow_any_instance_of(Api::V1::VolunteersController).to receive(:fetchVolunteerJson) do
+            [volunteer1,volunteer2]
+           end 
+           get('/api/v1/volunteers')
+           expect(Volunteer.all).to eq([volunteer1,volunteer2])
        end
 
-       it 'renders volunteers in ascending order'
+    #    it 'renders volunteers in ascending order' do
+         
 
-       it 'renders at most 40 volunteers'
+    #    end
+
+    #    it 'renders at most 40 volunteers'
 
     end
 
@@ -121,10 +135,9 @@ RSpec.describe Api::V1::VolunteersController, type: :request do
         it 'returns a no_content header' do
             delete "/api/v1/volunteers/#{volunteer.id}"
             expect(response).to have_http_status "204"
-       end
+        end
 
-
-end
+    end
 
 end
 
