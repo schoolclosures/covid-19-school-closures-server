@@ -10,7 +10,7 @@ module Api
 
       def create
         volunteer = Volunteer.create!(volunteer_params)
-        json_response(volunteer)
+        json_response(volunteer) 
       end
 
       def update
