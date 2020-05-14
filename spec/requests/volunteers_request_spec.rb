@@ -29,7 +29,6 @@ RSpec.describe Api::V1::VolunteersController, type: :request do
 
     describe '#show' do
         before(:each){ get "/api/v1/volunteers/#{volunteer.id}"}
-        let(:response_json){json}
 
         it "responds succesfully" do
           expect(response).to have_http_status(200)
@@ -37,7 +36,7 @@ RSpec.describe Api::V1::VolunteersController, type: :request do
 
         it "returns the information for the right volunteer" do
          #parse response to format json
-          expect(response_json['id']).to eq(volunteer.id)
+          expect(json['id']).to eq(volunteer.id)
         end
 
     end
@@ -69,11 +68,11 @@ RSpec.describe Api::V1::VolunteersController, type: :request do
        end
 
        it "creates one more volunteer" do
-        # I wanted to use the commented out way at first however, for some reason, 
+        # I wanted to use the following way at first, 
+        #  => expect{create_volunteer}.to change(Volunteer, :count).by(1)
+        # however, for some reason, 
         # rspec detects that count never changed, I guess it is bc the observation on :count
         # starts after before(:each) block happen?
-
-        #  =>  expect{create_volunteer}.to change(Volunteer, :count).by(1)
           expect(Volunteer.count).to eq(1)
        end
 
