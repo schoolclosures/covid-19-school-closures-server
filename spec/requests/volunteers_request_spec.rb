@@ -59,14 +59,13 @@ RSpec.describe Api::V1::VolunteersController, type: :request do
         let(:create_volunteer){post "/api/v1/volunteers", :params => params}
 
         before(:each){ create_volunteer }    
-        let(:response_json){json}
  
        it "responds successfully" do
           expect(response).to have_http_status(200)
        end
 
        it "returns the newly created volunteer object" do
-          expect(response_json).to include(params[:volunteer])
+          expect(json).to include(params[:volunteer])
        end
 
        it "creates one more volunteer" do
