@@ -1,12 +1,7 @@
 require 'rails_helper'
-require 'pry'
-
-# ADD sharing examples about connect succesfully
-# ask what if request failed??
 
 RSpec.describe Api::V1::VolunteersController, type: :request do
 
-# make sure to delete AIRTABLE API KEY before pushing it up
     let(:volunteer) { Volunteer.create!( :image_url=>"volunteer.jpg", :name=>"test1", :job_desc=>"description") }       
 
     describe '#index' do
@@ -16,29 +11,20 @@ RSpec.describe Api::V1::VolunteersController, type: :request do
        it 'responds succesfully' do
         # I don't want to repeat this allow_any_instance thing, but I got error when taking it out of the example:
         # => error: The use of doubles or partial doubles from rspec-mocks outside of the per-test lifecycle is not supported.
-        allow_any_instance_of(Api::V1::VolunteersController).to receive(:fetchVolunteerJson) do
-            [volunteer1,volunteer2]
-           end 
-          get('/api/v1/volunteers')
-          
-          expect(response).to have_http_status(:ok)
+            allow_any_instance_of(Api::V1::VolunteersController).to receive(:fetchVolunteerJson) do
+                [volunteer1,volunteer2]
+            end 
+            get('/api/v1/volunteers')          
+            expect(response).to have_http_status(:ok)
        end
 
-       it 'renders all volunteers' do
-          allow_any_instance_of(Api::V1::VolunteersController).to receive(:fetchVolunteerJson) do
-            [volunteer1,volunteer2]
-           end 
+        it 'renders all volunteers' do
+            allow_any_instance_of(Api::V1::VolunteersController).to receive(:fetchVolunteerJson) do
+                [volunteer1,volunteer2]
+            end 
            get('/api/v1/volunteers')
            expect(Volunteer.all).to eq([volunteer1,volunteer2])
-       end
-
-    #    it 'renders volunteers in ascending order' do
-         
-
-    #    end
-
-    #    it 'renders at most 40 volunteers'
-
+        end
     end
 
     describe '#show' do
@@ -70,12 +56,11 @@ RSpec.describe Api::V1::VolunteersController, type: :request do
             }
         }
 
-        let(:create_volunteer){post "http://localhost:3000/api/v1/volunteers", :params => params}
+        let(:create_volunteer){post "/api/v1/volunteers", :params => params}
 
         before(:each){ create_volunteer }    
         let(:response_json){json_parse(response.body)}
  
-
        it "responds successfully" do
           expect(response).to have_http_status(200)
        end
@@ -83,7 +68,6 @@ RSpec.describe Api::V1::VolunteersController, type: :request do
        it "returns the newly created volunteer object" do
           expect(response_json).to include(params[:volunteer])
        end
-
 
        it "creates one more volunteer" do
         # I wanted to use the commented out way at first however, for some reason, 
